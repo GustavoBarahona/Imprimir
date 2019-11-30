@@ -16,6 +16,7 @@ import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.StringTokenizer;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -42,6 +43,7 @@ public class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTAsalida = new javax.swing.JTextArea();
+        btn_Analizando = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -53,7 +55,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(110, 250, 180, 28);
+        jButton1.setBounds(20, 240, 90, 28);
 
         jTAsalida.setColumns(20);
         jTAsalida.setRows(5);
@@ -62,6 +64,15 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(10, 10, 370, 200);
 
+        btn_Analizando.setText("Analizando");
+        btn_Analizando.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AnalizandoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_Analizando);
+        btn_Analizando.setBounds(273, 240, 90, 28);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -69,6 +80,20 @@ public class Principal extends javax.swing.JFrame {
         PaginationExample pagination = new PaginationExample();
         pagination.imprimirnomina();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_AnalizandoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnalizandoActionPerformed
+        //StringTokenizer lineasdetexto = new StringTokenizer(jTAsalida.getText(), "\n", true);
+        StringTokenizer lineasdetexto = new StringTokenizer(jTAsalida.getText(), "", true);
+        JOptionPane.showMessageDialog(this, lineasdetexto.nextToken());
+        
+        //Se obtiene el total de lineas de texto
+        int totallineas = lineasdetexto.countTokens();
+        JOptionPane.showMessageDialog(this, "Lineas: " + totallineas);
+
+        int[] paginas;  // Arreglo de número de paginas que se necesitaran para imprimir todo el texto 
+
+        String[] textoLineas; //Lineas de texto que se imprimiran en cada hoja
+    }//GEN-LAST:event_btn_AnalizandoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -104,7 +129,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public class PaginationExample implements Printable {
         //Se obtienen las lineas de texto del JTextArea, la linea de texto finaliza cuando se encuentra el caracter de nueva linea \n
 
@@ -135,6 +160,7 @@ public class Principal extends javax.swing.JFrame {
                 for (int b = 0; b < numeroPaginas; b++) {
                     paginas[b] = (b + 1) * lineasPorPagina;
                 }
+                
             }
             //Si se recibe un indice de página mayor que el total de páginas calculadas entonces 
             //retorna NO_SUCH_PAGE para indicar que tal pagina no existe 
@@ -168,11 +194,13 @@ public class Principal extends javax.swing.JFrame {
         public void initTextoLineas() {
             if (textoLineas == null) {
                 int numLineas = totallineas;
+                JOptionPane.showMessageDialog(rootPane,"Número de lineas: " + numLineas);
                 textoLineas = new String[numLineas];
                 //Se llena el arreglo que contiene todas las lineas de texto
                 while (lineasdetexto.hasMoreTokens()) {
                     for (int i = 0; i < numLineas; i++) {
                         textoLineas[i] = lineasdetexto.nextToken();
+                        JOptionPane.showMessageDialog(rootPane,"Texto: " + textoLineas[i].toString());
                     }
                 }
             }
@@ -196,6 +224,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Analizando;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTAsalida;
