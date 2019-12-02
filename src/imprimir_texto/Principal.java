@@ -43,7 +43,6 @@ public class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTAsalida = new javax.swing.JTextArea();
-        btn_Analizando = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -55,7 +54,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(20, 240, 90, 28);
+        jButton1.setBounds(150, 240, 90, 28);
 
         jTAsalida.setColumns(20);
         jTAsalida.setRows(5);
@@ -64,15 +63,6 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(10, 10, 370, 200);
 
-        btn_Analizando.setText("Analizando");
-        btn_Analizando.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AnalizandoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btn_Analizando);
-        btn_Analizando.setBounds(273, 240, 90, 28);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -80,20 +70,6 @@ public class Principal extends javax.swing.JFrame {
         PaginationExample pagination = new PaginationExample();
         pagination.imprimirnomina();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btn_AnalizandoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnalizandoActionPerformed
-        //StringTokenizer lineasdetexto = new StringTokenizer(jTAsalida.getText(), "\n", true);
-        StringTokenizer lineasdetexto = new StringTokenizer(jTAsalida.getText(), "", true);
-        JOptionPane.showMessageDialog(this, lineasdetexto.nextToken());
-        
-        //Se obtiene el total de lineas de texto
-        int totallineas = lineasdetexto.countTokens();
-        JOptionPane.showMessageDialog(this, "Lineas: " + totallineas);
-
-        int[] paginas;  // Arreglo de número de paginas que se necesitaran para imprimir todo el texto 
-
-        String[] textoLineas; //Lineas de texto que se imprimiran en cada hoja
-    }//GEN-LAST:event_btn_AnalizandoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,7 +109,7 @@ public class Principal extends javax.swing.JFrame {
     public class PaginationExample implements Printable {
         //Se obtienen las lineas de texto del JTextArea, la linea de texto finaliza cuando se encuentra el caracter de nueva linea \n
 
-        StringTokenizer lineasdetexto = new StringTokenizer(jTAsalida.getText(), "\n", true);
+        StringTokenizer lineasdetexto = new StringTokenizer(jTAsalida.getText(), "\n", false); /*true con espacio de linea, false sin espacio*/
         //Se obtiene el total de lineas de texto
         int totallineas = lineasdetexto.countTokens();
 
@@ -146,16 +122,16 @@ public class Principal extends javax.swing.JFrame {
                 throws PrinterException {
             //Se establece la fuente, el tipo, el tamaño, la metrica según la fuente asignada, 
             //obtiene la altura de cada linea de texto para que todas queden iguales
-            Font font = new Font("Serif", Font.PLAIN, 8);
+            Font font = new Font("Calibri", Font.PLAIN, 100);
             FontMetrics metrics = g.getFontMetrics(font);
             int altodelinea = metrics.getHeight();
             //Calcula el número de lineas por pagina y el total de paginas
             if (paginas == null) {
                 initTextoLineas(); /* Agrega las lineas de texto al arreglo TEXTOLINEAS*/
                 //Calcula las lineas que le caben a cada página dividiendo la altura imprimible entre la altura de la linea de texto
-                int lineasPorPagina = (int) (pf.getImageableHeight() / altodelinea);
+                int lineasPorPagina = 1;/*(int) (pf.getImageableHeight() / altodelinea);*/
                 //Calcula el numero de páginas dividiendo el total de lineas entre el numero de lineas por página
-                int numeroPaginas = (textoLineas.length - 1) / lineasPorPagina;
+                int numeroPaginas = totallineas - 1;/*(textoLineas.length - 1) / lineasPorPagina;*/
                 paginas = new int[numeroPaginas];
                 for (int b = 0; b < numeroPaginas; b++) {
                     paginas[b] = (b + 1) * lineasPorPagina;
@@ -183,7 +159,7 @@ public class Principal extends javax.swing.JFrame {
             int end = (pageIndex == paginas.length) ? textoLineas.length : paginas[pageIndex];
             for (int line = start; line < end; line++) {
                 y += altodelinea;
-                g.drawString(textoLineas[line], 0, y);
+                g.drawString(textoLineas[line], 15, 520);
             }
             /* Retorna PAGE_EXISTS para indicar al invocador que esta página es parte del documento impreso
              */
@@ -224,7 +200,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Analizando;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTAsalida;
