@@ -124,7 +124,7 @@ public class Principal extends javax.swing.JFrame {
             //obtiene la altura de cada linea de texto para que todas queden iguales
             Font font = new Font("Calibri", Font.PLAIN, 100);
             FontMetrics metrics = g.getFontMetrics(font);
-            int altodelinea = metrics.getHeight();
+            int altodelinea = 12; /*metrics.getHeight();*/
             //Calcula el número de lineas por pagina y el total de paginas
             if (paginas == null) {
                 initTextoLineas(); /* Agrega las lineas de texto al arreglo TEXTOLINEAS*/
@@ -150,6 +150,10 @@ public class Principal extends javax.swing.JFrame {
 
             Graphics2D g2d = (Graphics2D) g;
             g2d.translate(pf.getImageableX(), pf.getImageableY());
+            
+            
+            g2d.setFont(new Font("Arial", Font.PLAIN, 18));
+            
             /*Dibujamos cada línea de texto en cada página,
          * se aumenta a la posición 'y' la altura de la línea a cada línea de texto para evitar la saturación de texto 
              */
@@ -159,7 +163,7 @@ public class Principal extends javax.swing.JFrame {
             int end = (pageIndex == paginas.length) ? textoLineas.length : paginas[pageIndex];
             for (int line = start; line < end; line++) {
                 y += altodelinea;
-                g.drawString(textoLineas[line], 15, 520);
+                g2d.drawString(textoLineas[line], 500, y); /*Coordenadas x, y*/
             }
             /* Retorna PAGE_EXISTS para indicar al invocador que esta página es parte del documento impreso
              */
