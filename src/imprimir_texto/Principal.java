@@ -122,19 +122,21 @@ public class Principal extends javax.swing.JFrame {
                 throws PrinterException {
             //Se establece la fuente, el tipo, el tamaño, la metrica según la fuente asignada, 
             //obtiene la altura de cada linea de texto para que todas queden iguales
-            Font font = new Font("Calibri", Font.PLAIN, 100);
-            FontMetrics metrics = g.getFontMetrics(font);
+            
+            //Font font = new Font("Calibri", Font.PLAIN, 100);  DESCARTADO
+            //FontMetrics metrics = g.getFontMetrics(font);    DESCARTADO
             int altodelinea = 12; /*metrics.getHeight();*/
+            
             //Calcula el número de lineas por pagina y el total de paginas
             if (paginas == null) {
-                initTextoLineas(); /* Agrega las lineas de texto al arreglo TEXTOLINEAS*/
+                initTextoLineas(); /*Agrega las lineasdetexto al arreglo TEXTOLINEAS Lineas de texto que se imprimiran en cada hoja*/
                 //Calcula las lineas que le caben a cada página dividiendo la altura imprimible entre la altura de la linea de texto
                 int lineasPorPagina = 1;/*(int) (pf.getImageableHeight() / altodelinea);*/
                 //Calcula el numero de páginas dividiendo el total de lineas entre el numero de lineas por página
                 int numeroPaginas = totallineas - 1;/*(textoLineas.length - 1) / lineasPorPagina;*/
                 paginas = new int[numeroPaginas];
                 for (int b = 0; b < numeroPaginas; b++) {
-                    paginas[b] = (b + 1) * lineasPorPagina;
+                    paginas[b] = (b + 1) * lineasPorPagina;                    
                 }
                 
             }
@@ -168,7 +170,7 @@ public class Principal extends javax.swing.JFrame {
             /* Retorna PAGE_EXISTS para indicar al invocador que esta página es parte del documento impreso
              */
             return PAGE_EXISTS;
-        }
+        }//FIN Print
 
         /* Agrega las lineas de texto al arreglo */
         public void initTextoLineas() {
@@ -201,7 +203,7 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
         }
-    }
+    }//Fin CLASE
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
